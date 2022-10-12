@@ -1,6 +1,6 @@
 ---
 title: "Project 1"
-author: "Carly Gaudin - SDS 313 UT Austin"
+author: "Carly Gaudin and Selah Norton - SDS 313 UT Austin"
 output:
   html_document: default 
 ---
