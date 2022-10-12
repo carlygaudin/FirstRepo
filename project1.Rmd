@@ -1,0 +1,79 @@
+---
+title: "Project 1"
+author: "Carly Gaudin - SDS 313 UT Austin"
+output:
+  html_document: default 
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, tidy=TRUE)
+options(scipen=100)
+```
+
+```{r, include=FALSE}
+hospital <- read.csv("Project1_hospitals.csv")
+```
+
+```{r, include=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(knitr)
+```
+
+**Introduction**
+
+The data set I chose to study shows the ratings and cost for different procedures in hospitals around the United States. The data is collected by the Center for Medicare & Medicaid Services as and Administration-wide effort to increase the availability and accessibility of information on quality of hospitals, so consumers can make informed decisions. 
+
+The outcome variable I have chosen is the Facility Type and the three predictor variables I have chosen are Cost of Heart Attack Procedure, Cost of Pneumonia Procedure, and Cost of Hip and Knee Procedure. 
+
+
+```{r, echo=FALSE}
+knitr::include_graphics("hos.jpg") 
+```
+
+Source: https://www.shutterstock.com/image-vector/medical-concept-hospital-building-doctor-flat-588196298
+
+**Distribution of Hospitals by Facility Type**
+```{r, echo=FALSE}
+hos_ggplot <- ggplot(hospital)
+hos_ggplot + geom_bar(aes(x=Facility.Type)) + xlab('Facility Type') + ylab('Number of Hospitals') + ggtitle('Distribution of Facility Types Amongst U.S. Hospitals') 
+table(hospital$Facility.Type)
+
+```
+
+This bar graph and table shows the distribution of hospitals in each facility type. Clearly, there are the most Private hospitals with a count of 2,078. There are 1,064 Government hospitals, 796 Proprietary hospitals, and 506 Unknown hospitals. With the very least is Church hospitals with only 328.
+
+```{r, echo=FALSE}
+#I created subsets for each of the facility types to be able to run five number summaries#
+church <- hospital[hospital$Facility.Type == "Church",]
+government <- hospital[hospital$Facility.Type == "Government",]
+private <- hospital[hospital$Facility.Type == "Private",]
+proprietary <- hospital[hospital$Facility.Type == "Proprietary",]
+unknown <- hospital[hospital$Facility.Type == "Unknown",]
+```
+
+***Cost of Heart Attack Procedure and Facility Type***
+```{r, echo=FALSE}
+hos_ggplot + geom_boxplot(aes(x=Procedure.Heart.Attack.Cost, y=Facility.Type)) + xlab('Cost of Heart Attack Procedure') + ylab('Facility Type') + ggtitle('Distribution of Heart Attack Procedure Costs Amongst Facility Types')
+```
+
+To show the distribution of Heart Attack procedure costs amongst facility types, I created a graph with 5 box plots for each of the facility types. I ran 5 number summaries for each facility type, so I could fully understand the distribution. For the Unknown facility type the distribution of heart attack procedure costs is skewed left and has  a five number summary of `r round(fivenum(unknown$Procedure.Heart.Attack.Cost),0)`. For the Proprietary facility type the distribution of heart attack procedure costs is skewed right and has a five number summary of `r fivenum(proprietary$Procedure.Heart.Attack.Cost)`. For the Private facility type the distribution of heart attack procedure costs is skewed right and has a five number summary of `r fivenum(private$Procedure.Heart.Attack.Cost)`. For the Government facility type the distribution of heart attack procedure costs is skewed left and has  a five number summary of `r fivenum(government$Procedure.Heart.Attack.Cost)`. For the Church facility type the distribution of heart attack procedure costs is skewed right and has  a five number summary of `r fivenum(church$Procedure.Heart.Attack.Cost)`.
+
+***Cost of Pneumonia Procedure and Facility Type***
+```{r, echo=FALSE}
+hos_ggplot + geom_boxplot(aes(x=Procedure.Pneumonia.Cost, y=Facility.Type)) + xlab('Cost of Pneumonia Procedure') + ylab('Facility Type') + ggtitle('Distribution of Pneumonia Procedure Costs Amongst Facility Types')
+```
+
+To show the distribution of Pneumonia procedure costs amongst facility types, I created a graph with 5 box plots for each of the facility types. I ran 5 number summaries for each facility type, so I could fully understand the distribution. For the Unknown facility type the distribution of pneumonia procedure costs is skewed right and has  a five number summary of `r fivenum(unknown$Procedure.Pneumonia.Cost)`. For the Proprietary facility type the distribution of pneumonia procedure costs is skewed right and has  a five number summary of `r fivenum(proprietary$Procedure.Pneumonia.Cost)`. For the Private facility type the distribution of pneumonia procedure costs is skewed right and has  a five number summary of `r fivenum(private$Procedure.Pneumonia.Cost)`. For the Government facility type the distribution of pneumonia procedure costs is skewed right and has  a five number summary of `r fivenum(government$Procedure.Pneumonia.Cost)`. For the Church facility type the distribution of pneumonia procedure costs is skewed right and has  a five number summary of `r fivenum(church$Procedure.Pneumonia.Cost)`.
+
+***Cost of Hip and Knee Procedure and Facility Type***
+```{r, echo=FALSE}
+hos_ggplot + geom_boxplot(aes(x=Procedure.Hip.Knee.Cost, y=Facility.Type)) + xlab('Cost of Hip and Knee Procedure') + ylab('Facility Type') + ggtitle('Distribution of Hip and Knee Procedure Costs Amongst Facility Types')
+```
+
+To show the distribution of Hip and Knee procedure costs amongst facility types, I created a graph with 5 box plots for each of the facility types. I ran 5 number summaries for each facility type, so I could fully understand the distribution. For the Unknown facility type the distribution of hip and knee procedure costs is skewed right and has  a five number summary of `r fivenum(unknown$Procedure.Hip.Knee.Cost)`. For the Proprietary facility type the distribution of hip and knee procedure costs is skewed right and has  a five number summary of `r fivenum(proprietary$Procedure.Hip.Knee.Cost)`. For the Private facility type the distribution of hip and knee procedure costs is skewed right and has  a five number summary of `r fivenum(private$Procedure.Hip.Knee.Cost)`. For the Government facility type the distribution of hip and knee procedure costs is skewed left and has  a five number summary of `r fivenum(government$Procedure.Hip.Knee.Cost)`. For the Church facility type the distribution of hip and knee procedure costs is symmetrical and has  a five number summary of `r fivenum(church$Procedure.Hip.Knee.Cost)`.
+
+**Conclusion**
+
+After my studies, I have concluded that procedure costs vary among the different facility types. For the Heart Attack procedure, Unknown and Government facility types both have medians at 0, putting them on the lower end of cost, while the other facility types have a median ranging from 20,000 to 25,000 putting them on the expensive side. For the Pneumonia procedure, all the facility types have very similar distributions with medians ranging from 15,000 to 20,000. For the Hip and Knee procedure, the Government facility type is on the lower end of cost with a median of 0. The Private, Proprietary and Unknown facility types have Q1 values of 0 and medians all around 20,000, putting their cost in the middle, but the Church facility type is on the expensive side with a Q1 value 17,830 and a median of 20,274.5. I suggest future research to look at why there are so many 0 values within the data set. I am interested to know how these procedures cost nothing for so many people that it is very clearly reflected in the data. 
